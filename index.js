@@ -52,6 +52,25 @@ app.post('/movie',async (req, res) => {
   }
 })
 
+//update Movie
+
+app.post('/movies/update/:movieId', async (req, res) => {
+  const movieId = req.params.movieId
+  const updateData = req.body
+  try {
+    const updatedMovie = await MovieModel.findByIdAndUpdate(movieId, updateData, { new: true })
+    if (!updatedMovie)
+    {
+      res.status(404).json({error:'movie not found',error})
+    }
+    res.json(updatedMovie)
+  }
+  catch (error)
+  {
+res.status(500).json({error:'failed to update movie',error})
+  }
+})
+
 //delete one movie
 
 app.delete('/movies/:movieId', async (req, res) => {
